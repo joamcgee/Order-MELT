@@ -1,0 +1,6 @@
+2023-06-26 21:15:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "drop table if exists [*]order CASCADE "; expected "identifier"; SQL statement:
+drop table if exists order CASCADE  [42001-214]
+2023-06-26 21:15:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]order (id bigint not null, address varchar(255), name varchar(255), phone_number varchar(255), pizza varchar(255), quantity integer not null, primary key (id))"; expected "identifier"; SQL statement:
+create table order (id bigint not null, address varchar(255), name varchar(255), phone_number varchar(255), pizza varchar(255), quantity integer not null, primary key (id)) [42001-214]
