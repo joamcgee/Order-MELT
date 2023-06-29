@@ -22,7 +22,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order createNewOrder(Order order) {
+    public Order createOrder(Order order) {
         Order newOrder = new Order();
         newOrder.setName(order.getName());
         newOrder.setPhoneNumber(order.getPhoneNumber());
@@ -44,17 +44,41 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> findByName(String name) { //Optional container  allows handles scenarios where values may or may not be present
-        List<Order> records = orderRepository.findAll();
-        Optional<Order> nameOnOrder = records.stream()
+    public Optional<Order> findByName(String name) { //Optional container handles scenarios where values may or may not be present
+     List<Order> orderList = orderRepository.findAll();
+        return orderList.stream()
                 .filter(order -> order.getName().equals(name))
                 .findFirst();
-
-        if(nameOnOrder.isPresent()){
-            return nameOnOrder;
-        } else {
-            System.out.println("Nam not found");
-            return Optional.empty();
-        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

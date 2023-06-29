@@ -9,7 +9,7 @@ public interface OrderService {
 
     List<Order> findAllOrders();
 
-    Order createNewOrder(Order order);
+    Order createOrder(Order order);
 
     void updateOrder(Order order);
 

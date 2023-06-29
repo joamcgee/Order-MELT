@@ -9,9 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/api/order")
 @AllArgsConstructor
 public class OrderController {
     @Autowired
@@ -19,17 +20,50 @@ public class OrderController {
 
 
     @PostMapping()
-    public ResponseEntity<Order> createOrder(@RequestBody Order order){
+    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         try {
-            Order newOrder = orderServiceImpl.createNewOrder(order);
-           return ResponseEntity.status(HttpStatus.CREATED).body(newOrder);
-       } catch (Exception e) {
-           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Order());
-       }
+            Order newOrder = orderServiceImpl.createOrder(order);
+            return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Order());
+        }
     }
 
     @GetMapping("/orders")
-    public List<Order> getOrders() {
-        return orderServiceImpl.findAllOrders();
+    public ResponseEntity<List<Order>> findAllOrders() {
+        try {
+            List<Order> orderList = orderServiceImpl.findAllOrders();
+            return new ResponseEntity<>(orderList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Order> updateOrder(@RequestBody Order order) {
+        try {
+            orderServiceImpl.updateOrder(order);
+            return new ResponseEntity<>(order, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Long> deleteOrder(@PathVariable Long id) {
+        orderServiceImpl.deleteOrder(id);
+        return new ResponseEntity<>(id,HttpStatus.OK);
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<Optional<Order>> findByName(@RequestParam String name) {
+        try {
+            Optional<Order> response = orderServiceImpl.findByName(name);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
