@@ -3,6 +3,7 @@ package com.pizza.MELT.controller;
 import com.pizza.MELT.pojo.Order;
 import com.pizza.MELT.service.OrderServiceImpl;
 import lombok.AllArgsConstructor;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +13,28 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/order")
+@RequestMapping("/")
 @AllArgsConstructor
 public class OrderController {
     @Autowired
     private final OrderServiceImpl orderServiceImpl;
 
 
-    @PostMapping()
+
+    @GetMapping("/")
+    public Order dumbData(Order order){
+        Order order1 = new Order();
+        order1.setId(order.getId());
+        order1.setName("Joanthony");
+        order1.setPizza("Cheese");
+        order1.setQuantity(4);
+        order1.setPhoneNumber("123456789");
+        order1.setAddress("345 East Hampton Dr");
+
+        return order1;
+    }
+
+    @PostMapping("/create")
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         try {
             Order newOrder = orderServiceImpl.createOrder(order);
