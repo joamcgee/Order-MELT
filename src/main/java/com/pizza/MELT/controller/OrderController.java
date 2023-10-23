@@ -40,11 +40,11 @@ public class OrderController {
 
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Order> updateOrder(@RequestBody Order order) {
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Order> updateOrder(@PathVariable Long id ,@RequestBody Order order) {
         try {
-            orderServiceImpl.updateOrder(order);
-            return new ResponseEntity<>(order, HttpStatus.OK);
+            order.setId(id);
+            return new ResponseEntity<>(orderServiceImpl.updateOrder(order), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
